@@ -7,6 +7,18 @@ A [Typst](https://typst.app/) book/notes template with pre-configured packages f
 - Typst 0.14.2+
 - Fonts: Libertinus Serif, SauceCodePro NFM, AR PL KaitiM Big5
 
+### Font Dependencies
+
+On Ubuntu/Debian, install the packaged CJK font and install Libertinus/SauceCodePro from their upstream releases:
+
+```sh
+sudo apt-get update
+sudo apt-get install -y curl fontconfig fonts-arphic-bkai00mp unzip
+```
+
+- Libertinus Serif: download `Libertinus-7.051.zip` from the [Libertinus releases](https://github.com/alerque/libertinus/releases) and install the `static/OTF/*.otf` files.
+- SauceCodePro NFM: download `SourceCodePro.zip` from the [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) and install the font files.
+
 ## Structure
 
 ```
@@ -62,45 +74,4 @@ Each chapter file should import the template and apply the `conf` show rule:
 #show: conf
 
 = Chapter Title
-```
-
-### Callout Blocks
-
-```typst
-#tip[A tip for the reader]
-#warning[Something to watch out for]
-#note[A side note]
-#tasks[A task or exercise]
-#instruction[Step-by-step instructions]
-#file-tree[Directory structure here]
-```
-
-### Code Blocks
-
-Inline code block:
-
-```typst
-#code(title: "Example")[
-  ```rs
-  fn main() { println!("hello"); }
-  ```
-]
-```
-
-Reference an external file:
-
-```typst
-#code-ref(caption: "My File", lang: "python", path: "path/to/file.py")
-```
-
-## Build
-
-```sh
-typst compile main.typ
-```
-
-To watch for changes:
-
-```sh
-typst watch main.typ
 ```
