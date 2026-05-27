@@ -11,6 +11,7 @@
 
 #let author = "ShangJhe Li"
 #let doc-name = "Book Template"
+#let subtitle = "A practical Typst book template"
 
 #let latin-font = "Libertinus Serif"
 // #let latex-font = "CMU serif"
@@ -66,31 +67,115 @@
   ]
 }
 
-#let title() = {
-  align(center, text(24pt)[
-    * #doc-name *
-    #align(center, text(12pt)[
-      * Author: #author * \
-      * Date: #datetime.today().display() * \
-    ])
-  ])
+#let title(
+  subtitle: subtitle,
+  date: datetime.today().display(),
+) = {
+  page(
+    margin: 0pt,
+    header: none,
+    footer: none,
+    numbering: none,
+  )[
+    #set text(font: (latin-font, mandrin-font))
+    #rect(
+      width: 100%,
+      height: 100%,
+      // fill: rgb("#f7f4ef"),
+      stroke: none,
+      inset: 0pt,
+    )[
+      #pad(x: 2.4cm, y: 2.6cm)[
+        #stack(dir: ttb, spacing: 0pt)[
+          #align(right)[
+            #stack(dir: ttb, spacing: 0.35em)[
+              #box(width: 3.4cm, height: 1.4pt, fill: black)
+              #text(size: 9pt, tracking: 0.08em)[BOOK TEMPLATE]
+            ]
+          ]
+          #v(1fr)
+          #align(horizon)[
+            #block(width: 100%)[
+              #box(width: 2.8cm, height: 3pt, fill: rgb("#a23b2a"))
+              #v(0.75cm)
+              #text(size: 38pt, weight: "bold", doc-name)
+              #v(0.65cm)
+              #box(width: 8cm, height: 1pt, fill: rgb("#2f3437"))
+              #v(0.55cm)
+              #text(size: 15pt, fill: rgb("#4d5659"), subtitle)
+            ]
+          ]
+          #v(1fr)
+          #grid(columns: (1fr, auto), column-gutter: 1.4cm)[
+            #stack(dir: ttb, spacing: 0.4em)[
+              #text(size: 9pt, fill: rgb("#5f686b"))[Author]
+              #text(size: 14pt, weight: "semibold", author)
+            ]
+          ][
+            #stack(dir: ttb, spacing: 0.4em)[
+              #text(size: 9pt, fill: rgb("#5f686b"))[Date]
+              #text(size: 14pt, weight: "semibold", date)
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+  counter(page).update(1)
+}
+
+#let chapter-heading(it) = {
+  pagebreak(weak: true)
+  v(1.2cm)
+  block(width: 100%)[
+    #if it.numbering == none [
+      #align(center)[
+        #box(width: 100%, height: 1.2pt, fill: rgb("#2f3437"))
+        #v(-0.9em)
+        #text(size: 24pt, weight: "bold", it.body)
+        #v(-0.9em)
+        #box(width: 100%, height: 1.2pt, fill: rgb("#2f3437"))
+      ]
+    ] else [
+      #v(-2em)
+      #align(center)[
+        #box(width: 100%, height: 1.2pt, fill: rgb("#2f3437"))
+        #v(-0.9em)
+          #text(size: 24pt, weight: "bold", fill: rgb("#a23b2a"))[
+            Chapter #context counter(heading).display("1")
+          ]
+        #v(-0.9em)
+        #box(width: 100%, height: 1.2pt, fill: rgb("#2f3437"))
+
+        #text(size: 24pt, weight: "bold", it.body)
+        #v(2em)
+      ]
+    ]
+  ]
+  v(0.85cm)
 }
 
 #let conf(doc) = [
   #show: codly-init.with()
   #codly(languages: codly-languages)
-  
+
   #show: show-theorion
 
   #set page(
     paper: "a4",
     margin: (x: 2cm, y: 2.5cm),
     numbering: "1",
-    header: [
-      _ #doc-name _
-      #h(1fr)
-      
-      #box(fill: black, width: 100%, height: 1pt)  // Top bar
+    header: context [
+      #let page-num = counter(page).get().first()
+      #let chapter-on-page = query(heading.where(level: 1)).any(
+        it => counter(page).at(it.location()).first() == page-num
+      )
+      #if not chapter-on-page [
+        _ #doc-name _
+        #h(1fr)
+
+        #box(fill: black, width: 100%, height: 1pt)  // Top bar
+      ]
     ],
     footer: context [
       #box(fill: black, width: 100%, height: 1pt)
@@ -99,7 +184,7 @@
       #counter(page).display("1")
     ],
   )
-  
+
   #set text(
     font: (
       latin-font,
@@ -109,13 +194,15 @@
     size: 12pt,
     cjk-latin-spacing: auto,
   )
-  
+
   #set par(justify: true)
   #set heading(numbering: (..nums) => nums.pos().map(str).join(".") + " ")
+  #show heading.where(level: 1): chapter-heading
   #set list(indent: 1em)
   #set enum(indent: 1em)
 
   #show raw: set text(font: mono-font)
-  
+  #show: gentle-clues.with(breakable: true)
+
   #doc
 ]
