@@ -1,5 +1,3 @@
-#import "@preview/fontawesome:0.6.0": *
-
 #import "../../template.typ": *
 #show: conf
 
@@ -9,3 +7,4 @@
 
 #include "code.typ"
 #include "block.typ"
+#include "chapter.typ"

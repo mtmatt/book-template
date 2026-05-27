@@ -215,9 +215,17 @@
         #let sections = query(selector(heading.where(level: 2)).before(here()))
         #if chapters.len() > 0 {
           let last-chapter = chapters.last()
-          let last-section = sections.last()
-          let num = str(counter(heading).at(last-chapter.location()).first()) + "." + str(counter(heading).at(last-section.location()).first())
-          [#num #last-section.body]
+          let chap-num = counter(heading).at(last-chapter.location()).first()
+          let has-section = sections.len() > 0 and counter(heading).at(sections.last().location()).first() == chap-num
+          if has-section {
+            let last-section = sections.last()
+            let sec-num = counter(heading).at(last-section.location()).last()
+            let num = str(chap-num) + "." + str(sec-num)
+            [#num #last-section.body]
+          } else {
+            let num = str(chap-num)
+            [#num #last-chapter.body]
+          }
         }
         #box(fill: black, width: 100%, height: 1pt)  // Top bar
       ]
