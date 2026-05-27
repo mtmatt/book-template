@@ -36,19 +36,62 @@
 }
 
 // Clue Setting
-#let tip(title: "Tip", ..args) = clue(icon: fa-lightbulb(), title: title, border-color: yellow, accent-color: yellow, ..args)
+#let tip(title: "Tip", ..args) = clue(
+  icon: fa-lightbulb(),
+  title: title,
+  border-color: yellow,
+  accent-color: yellow,
+  ..args,
+)
 
-#let code(title: "Code", ..args) = clue(icon: fa-code(), title: title, border-color: rgb("#7287fd"), accent-color: rgb("#7287fd"), ..args)
+#let code(title: "Code", ..args) = clue(
+  icon: fa-code(),
+  title: title,
+  border-color: rgb("#7287fd"),
+  accent-color: rgb("#7287fd"),
+  ..args,
+)
 
-#let warning(title: "Warning", ..args) = clue(icon: fa-warning(), title: title, border-color: rgb("#ffb639"), accent-color: rgb("#ffb639"), ..args)
+#let warning(title: "Warning", ..args) = clue(
+  icon: fa-warning(),
+  title: title,
+  border-color: rgb("#ffb639"),
+  accent-color: rgb("#ffb639"),
+  ..args,
+)
 
-#let tasks(title: "Tasks", ..args) = clue(icon: fa-tasks(), title: title, border-color: rgb("#9774ff"), accent-color: rgb("#9774ff"), ..args)
+#let tasks(title: "Tasks", ..args) = clue(
+  icon: fa-tasks(),
+  title: title,
+  border-color: rgb("#9774ff"),
+  accent-color: rgb("#9774ff"),
+  ..args,
+)
 
-#let note(title: "Note", ..args) = clue(icon: fa-note-sticky(), title: title, border-color: rgb("#26e1d1"), accent-color: rgb("#26e1d1"), ..args)
+#let note(title: "Note", ..args) = clue(
+  icon: fa-note-sticky(),
+  title: title,
+  border-color: rgb("#26e1d1"),
+  accent-color: rgb("#26e1d1"),
+  ..args,
+)
 
-#let file-tree(title: "Directory Structure", content, ..args) = clue(icon: fa-folder-tree(), title: title, border-color: rgb("#73d24b"), accent-color: rgb("#73d24b"), [#no-codly[#content]], ..args)
+#let file-tree(title: "Directory Structure", content, ..args) = clue(
+  icon: fa-folder-tree(),
+  title: title,
+  border-color: rgb("#73d24b"),
+  accent-color: rgb("#73d24b"),
+  [#no-codly[#content]],
+  ..args,
+)
 
-#let instruction(title: "Instruction", ..args) = clue(icon: fa-terminal(), title: title, border-color: rgb("#e04689"), accent-color: rgb("#e04689"), ..args)
+#let instruction(title: "Instruction", ..args) = clue(
+  icon: fa-terminal(),
+  title: title,
+  border-color: rgb("#e04689"),
+  accent-color: rgb("#e04689"),
+  ..args,
+)
 
 // Code Reference
 #let code-ref(path: str, lang: str, caption: "") = {
@@ -83,40 +126,35 @@
       height: 100%,
       // fill: rgb("#f7f4ef"),
       stroke: none,
-      inset: 0pt,
+      inset: (x: 2.4cm, y: 2.6cm),
     )[
-      #pad(x: 2.4cm, y: 2.6cm)[
-        #stack(dir: ttb, spacing: 0pt)[
-          #align(right)[
-            #stack(dir: ttb, spacing: 0.35em)[
-              #box(width: 3.4cm, height: 1.4pt, fill: black)
-              #text(size: 9pt, tracking: 0.08em)[BOOK TEMPLATE]
-            ]
-          ]
-          #v(1fr)
-          #align(horizon)[
-            #block(width: 100%)[
-              #box(width: 2.8cm, height: 3pt, fill: rgb("#a23b2a"))
-              #v(0.75cm)
-              #text(size: 38pt, weight: "bold", doc-name)
-              #v(0.65cm)
-              #box(width: 8cm, height: 1pt, fill: rgb("#2f3437"))
-              #v(0.55cm)
-              #text(size: 15pt, fill: rgb("#4d5659"), subtitle)
-            ]
-          ]
-          #v(1fr)
-          #grid(columns: (1fr, auto), column-gutter: 1.4cm)[
-            #stack(dir: ttb, spacing: 0.4em)[
-              #text(size: 9pt, fill: rgb("#5f686b"))[Author]
-              #text(size: 14pt, weight: "semibold", author)
-            ]
-          ][
-            #stack(dir: ttb, spacing: 0.4em)[
-              #text(size: 9pt, fill: rgb("#5f686b"))[Date]
-              #text(size: 14pt, weight: "semibold", date)
-            ]
-          ]
+      #align(right)[
+        #stack(dir: ttb, spacing: 0.35em)[
+          #box(width: 3.4cm, height: 1.4pt, fill: black)
+        ]
+      ]
+      #v(1fr)
+      #align(horizon)[
+        #block(width: 100%)[
+          #box(width: 2.8cm, height: 3pt, fill: rgb("#a23b2a"))
+          #v(0.75cm)
+          #text(size: 38pt, weight: "bold", doc-name)
+          #v(0.65cm)
+          #box(width: 8cm, height: 1pt, fill: rgb("#2f3437"))
+          #v(0.55cm)
+          #text(size: 15pt, fill: rgb("#4d5659"), subtitle)
+        ]
+      ]
+      #v(1fr)
+      #grid(columns: (1fr, auto), column-gutter: 1.4cm)[
+        #stack(dir: ttb, spacing: 0.4em)[
+          #text(size: 9pt, fill: rgb("#5f686b"))[Author]
+          #text(size: 14pt, weight: "semibold", author)
+        ]
+      ][
+        #stack(dir: ttb, spacing: 0.4em)[
+          #text(size: 9pt, fill: rgb("#5f686b"))[Date]
+          #text(size: 14pt, weight: "semibold", date)
         ]
       ]
     ]
@@ -141,9 +179,9 @@
       #align(center)[
         #box(width: 100%, height: 1.2pt, fill: rgb("#2f3437"))
         #v(-0.9em)
-          #text(size: 24pt, weight: "bold", fill: rgb("#a23b2a"))[
-            Chapter #context counter(heading).display("1")
-          ]
+        #text(size: 24pt, weight: "bold", fill: rgb("#a23b2a"))[
+          Chapter #context counter(heading).display("1")
+        ]
         #v(-0.9em)
         #box(width: 100%, height: 1.2pt, fill: rgb("#2f3437"))
 
@@ -168,12 +206,19 @@
     header: context [
       #let page-num = counter(page).get().first()
       #let chapter-on-page = query(heading.where(level: 1)).any(
-        it => counter(page).at(it.location()).first() == page-num
+        it => counter(page).at(it.location()).first() == page-num,
       )
       #if not chapter-on-page [
         _ #doc-name _
         #h(1fr)
-
+        #let chapters = query(selector(heading.where(level: 1)).before(here()))
+        #let sections = query(selector(heading.where(level: 2)).before(here()))
+        #if chapters.len() > 0 {
+          let last-chapter = chapters.last()
+          let last-section = sections.last()
+          let num = str(counter(heading).at(last-chapter.location()).first()) + "." + str(counter(heading).at(last-section.location()).first())
+          [#num #last-section.body]
+        }
         #box(fill: black, width: 100%, height: 1pt)  // Top bar
       ]
     ],

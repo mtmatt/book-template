@@ -20,5 +20,9 @@
 // Title
 #title()
 
+#outline(depth: 2, title: auto)
+
 #include "chapters/how-to-use/ch.typ"
 #include "chapters/acknowledgement.typ"
+
+#bibliography("ref.bib", style: "ieee", full: true)
